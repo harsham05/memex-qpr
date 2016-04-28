@@ -7,13 +7,7 @@ def main(groundF):
     with open(groundF, "r") as groundF:
 
         ground_truth = set([line.strip().rstrip('/').split("://")[-1] for line in groundF])
-
-        # remove http
-
-        # remove https:
-
-        split on it
-
+        # remove http or https
 
         with open("JPL_AprilQPR_CP3.txt", "r") as jplF:
 
@@ -21,13 +15,11 @@ def main(groundF):
 
             results = ground_truth & jpl
 
-
             print "Ground truth Sample", len(ground_truth)
 
             print "Overlap", len(results)
 
             print "Recall", len(results) / float(len(ground_truth))
-
 
 
 
