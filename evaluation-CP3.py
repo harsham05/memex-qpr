@@ -1,20 +1,31 @@
-import sys
-
+import sys, tldextract
 
 def main(groundF, jplF):
     print groundF
 
     with open(groundF, "r") as groundF:
 
-        ground_truth = set([line.strip().rstrip('/').split("://")[-1] for line in groundF])
-        # remove http or https
+        urls = [line.strip().rstrip('/') for line in groundF]
+
+        ground_truth_domains = set([tldextract.extract(url).registered_domain for url in urls])
+
+        ground_truth = set([url.split("://")[-1] for url in urls])  # remove http or https
+
 
         with open(jplF, "r") as jplF:
 
-            jpl = set([line.strip().strip('"').rstrip('/').split("://")[-1] for line in jplF])
 
-            results = ground_truth & jpl
+            jpl_urls = [ line.strip().strip('"').rstrip('/') for line in jplF]
 
+            jpl_domains =  set([tldextract.extract(url).registered_domain for url in jpl_urls])
+
+            jpl_truth = set([url.split("://")[-1] for url in jpl_urls])
+
+
+
+            results = ground_truth & jpl_truth
+
+            print "URLs"
             print "Ground truth Sample Size:\t", len(ground_truth)
 
             print "Overlap:\t", len(results)
@@ -22,6 +33,15 @@ def main(groundF, jplF):
             print "Recall:\t", (len(results) * 100)/float(len(ground_truth))
 
 
+            domains = ground_truth_domains & jpl_domains
+
+            print "\nHost Names"
+
+            print "Ground truth Host Names:\t", len(ground_truth_domains)
+
+            print "HostName Overlap:\t", len(domains)
+
+            print "Recall:\t", (len(domains) * 100)/float(len(ground_truth_domains))
 
 
 if __name__ == "__main__":
