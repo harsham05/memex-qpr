@@ -1,6 +1,8 @@
 import sys, tldextract
 
 def main(groundF, jplF):
+
+    print "\n\n#####################"
     print groundF
 
     with open(groundF, "r") as groundF:
@@ -14,10 +16,9 @@ def main(groundF, jplF):
 
         with open(jplF, "r") as jplF:
 
+            jpl_urls = [line.strip().strip('"').rstrip('/') for line in jplF]
 
-            jpl_urls = [ line.strip().strip('"').rstrip('/') for line in jplF]
-
-            jpl_domains =  set([tldextract.extract(url).registered_domain for url in jpl_urls])
+            jpl_domains = set([tldextract.extract(url).registered_domain for url in jpl_urls])
 
             jpl_truth = set([url.split("://")[-1] for url in jpl_urls])
 
@@ -25,7 +26,7 @@ def main(groundF, jplF):
 
             results = ground_truth & jpl_truth
 
-            print "URLs"
+            print "\nURLs"
             print "Ground truth Sample Size:\t", len(ground_truth)
 
             print "Overlap:\t", len(results)
