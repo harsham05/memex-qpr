@@ -5,7 +5,7 @@ def main(groundF, jplF):
     print "\n\n#####################"
     print groundF
 
-    with open(groundF, "r") as groundF:
+    with open(groundF.strip(), "r") as groundF:
 
         urls = [line.strip().rstrip('/') for line in groundF]
 
@@ -50,10 +50,10 @@ if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
 
 
-
+"""
 def weighted():
 
-    """
+
     weighted Sum, Recall of those 4 questions, in CP1-1, for each question
 
     of the overall Eval, 4 question
@@ -62,7 +62,7 @@ def weighted():
 
     if you move logos, tell Wayne
 
-    """
+"""
 
 
 
